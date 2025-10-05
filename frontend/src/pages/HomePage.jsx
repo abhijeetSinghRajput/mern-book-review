@@ -3,19 +3,32 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/stores/useAuthStore";
-import { Star, ChevronRight, BookOpen, Users, Award, TrendingUp } from "lucide-react";
+import {
+  Star,
+  ChevronRight,
+  BookOpen,
+  Users,
+  Award,
+  TrendingUp,
+  TestTubeDiagonalIcon,
+  BookOpenIcon,
+  ScrollIcon,
+  UserRoundIcon,
+  CpuIcon,
+  BrainIcon,
+} from "lucide-react";
 import React from "react";
 
 const HomePage = () => {
   const { authUser } = useAuthStore();
 
   const subjects = [
-    { name: "Science", count: "1.2k", color: "bg-blue-500" },
-    { name: "Fiction", count: "890", color: "bg-green-500" },
-    { name: "History", count: "756", color: "bg-amber-500" },
-    { name: "Biography", count: "634", color: "bg-purple-500" },
-    { name: "Technology", count: "1.5k", color: "bg-red-500" },
-    { name: "Philosophy", count: "543", color: "bg-indigo-500" },
+    { name: "Science", count: "1.2k", icon: TestTubeDiagonalIcon },
+    { name: "Fiction", count: "890", icon: BookOpenIcon },
+    { name: "History", count: "756", icon: ScrollIcon },
+    { name: "Biography", count: "634", icon: UserRoundIcon },
+    { name: "Technology", count: "1.5k", icon: CpuIcon },
+    { name: "Philosophy", count: "543", icon: BrainIcon },
   ];
 
   return (
@@ -28,7 +41,7 @@ const HomePage = () => {
           <section className="mb-8">
             <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-2xl p-6 border">
               <h1 className="text-3xl font-bold text-foreground mb-2">
-                Welcome back, {authUser.fullName?.split(' ')[0] || 'Reader'}!
+                Welcome back, {authUser.fullName?.split(" ")[0] || "Reader"}!
               </h1>
               <p className="text-muted-foreground text-lg">
                 Continue your reading journey with these recommendations
@@ -67,16 +80,20 @@ const HomePage = () => {
                 {subjects.map((subject, index) => (
                   <div
                     key={index}
-                    className="bg-card border rounded-xl p-4 text-center hover:shadow-md transition-all duration-300 cursor-pointer group hover:scale-105"
+                    className="flex gap-4  bg-card border rounded-xl p-4 text-center hover:shadow-md transition-all duration-300 cursor-pointer group hover:scale-105"
                   >
-                    <div className={`w-12 h-12 ${subject.color} rounded-full flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform`}>
-                      <BookOpen className="h-6 w-6 text-white" />
+                    <div
+                      className={`w-12 h-12 bg-accent rounded-full flex items-center justify-center group-hover:scale-110 transition-transform`}
+                    >
+                      <subject.icon className="h-6 w-6 text-white" />
                     </div>
-                    <span className="font-semibold text-foreground block">
-                      {subject.name}
-                    </span>
-                    <div className="text-sm text-muted-foreground mt-1">
-                      {subject.count} books
+                    <div>
+                      <span className="font-semibold text-foreground block">
+                        {subject.name}
+                      </span>
+                      <div className="text-sm text-muted-foreground mt-1">
+                        {subject.count} books
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -123,7 +140,11 @@ const HomePage = () => {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[...Array(4)].map((_, index) => (
-                  <BookCard key={index} variant="vertical" featured={index === 0} />
+                  <BookCard
+                    key={index}
+                    variant="vertical"
+                    featured={index === 0}
+                  />
                 ))}
               </div>
             </section>
@@ -176,13 +197,29 @@ const HomePage = () => {
   );
 };
 
-const BookCard = ({ variant = "vertical", featured = false, special = false }) => {
+const BookCard = ({
+  variant = "vertical",
+  featured = false,
+  special = false,
+}) => {
   return (
-    <Card className={`overflow-hidden hover:shadow-lg transition-all duration-300 group border ${
-      featured ? 'ring-2 ring-primary/20' : ''
-    } ${special ? 'bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200' : ''}`}>
-      <div className={`flex ${variant === "horizontal" ? "flex-row" : "flex-col"} ${variant === "horizontal" ? "h-32" : ""}`}>
-        <CardContent className={`p-0 relative ${variant === "horizontal" ? "w-24 h-full flex-shrink-0" : "w-full h-48"}`}>
+    <Card
+      className={`overflow-hidden hover:shadow-lg transition-all duration-300 group border ${
+        featured ? "ring-2 ring-primary/20" : ""
+      }`}
+    >
+      <div
+        className={`flex ${
+          variant === "horizontal" ? "flex-row" : "flex-col"
+        } ${variant === "horizontal" ? "h-32" : ""}`}
+      >
+        <CardContent
+          className={`p-0 relative ${
+            variant === "horizontal"
+              ? "w-24 h-full flex-shrink-0"
+              : "w-full h-48"
+          }`}
+        >
           <img
             src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=300&fit=crop"
             alt="book cover"
@@ -196,16 +233,25 @@ const BookCard = ({ variant = "vertical", featured = false, special = false }) =
             </Badge>
           )}
           {special && (
-            <Badge variant="secondary" className="absolute top-2 left-2 bg-amber-500 text-white">
+            <Badge
+              variant="secondary"
+              className="absolute top-2 left-2 bg-amber-500 text-white"
+            >
               Editor's Pick
             </Badge>
           )}
         </CardContent>
-        <div className={`flex-1 p-4 ${variant === "horizontal" ? "flex flex-col justify-center" : ""}`}>
+        <div
+          className={`flex-1 p-4 ${
+            variant === "horizontal" ? "flex flex-col justify-center" : ""
+          }`}
+        >
           <CardHeader className="p-0">
-            <CardTitle className={`text-foreground group-hover:text-primary transition-colors ${
-              variant === "horizontal" ? "text-base" : "text-lg"
-            }`}>
+            <CardTitle
+              className={`text-foreground group-hover:text-primary transition-colors ${
+                variant === "horizontal" ? "text-base" : "text-lg"
+              }`}
+            >
               The Great Novel
             </CardTitle>
             <div className="mt-1">
@@ -225,7 +271,8 @@ const BookCard = ({ variant = "vertical", featured = false, special = false }) =
           {variant === "vertical" && (
             <div className="mt-3">
               <div className="text-xs text-muted-foreground line-clamp-2">
-                A captivating story about adventure and discovery that will keep you engaged from start to finish.
+                A captivating story about adventure and discovery that will keep
+                you engaged from start to finish.
               </div>
             </div>
           )}

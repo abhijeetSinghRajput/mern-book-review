@@ -2,9 +2,14 @@ import React from "react";
 import { ModeToggle } from "./mode-toggle";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { LogOut, User, Mail } from "lucide-react";
+import { LogOut, User, Mail, Plus } from "lucide-react";
+import CreateBookDrawer from "./CreateBookDrawer";
 
 const Header = () => {
   const { authUser } = useAuthStore();
@@ -40,7 +45,10 @@ const Header = () => {
             {authUser ? (
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                  <Button
+                    variant="ghost"
+                    className="relative h-8 w-8 rounded-full"
+                  >
                     <Avatar className="h-8 w-8">
                       <AvatarFallback className="bg-primary text-primary-foreground">
                         {getInitial()}
@@ -78,8 +86,8 @@ const Header = () => {
 
                     {/* Actions Section */}
                     <div className="space-y-2">
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="destructive"
                         className="w-full justify-start"
                         onClick={handleLogout}
                       >
@@ -91,12 +99,11 @@ const Header = () => {
                 </PopoverContent>
               </Popover>
             ) : (
-              <div className="text-sm text-muted-foreground">
-                Not signed in
-              </div>
+              <div className="text-sm text-muted-foreground">Not signed in</div>
             )}
 
             {/* Theme Toggle */}
+            <CreateBookDrawer/>
             <ModeToggle />
           </nav>
         </div>

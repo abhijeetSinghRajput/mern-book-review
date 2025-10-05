@@ -3,8 +3,10 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './db.js';
-import authRoutes from "./routes/auth.router.js";
 import cookieParser from 'cookie-parser';
+
+import authRoutes from "./routes/auth.route.js";
+import bookRoutes from "./routes/book.route.js"
 
 dotenv.config();
 
@@ -24,6 +26,7 @@ app.get('/', (req, res) => {
   res.status(200).json({ message: "Hello from server" });
 });
 app.use("/api/auth", authRoutes);
+app.use("/api/book", bookRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

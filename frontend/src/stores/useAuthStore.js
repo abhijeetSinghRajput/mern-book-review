@@ -4,7 +4,6 @@ import { axiosInstance } from "@/lib/axios";
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
-  sessionId: null,
   loader: {
     checkAuth: false,
     login: false,
@@ -57,8 +56,8 @@ export const useAuthStore = create((set, get) => ({
 
     try {
       const res = await axiosInstance.post("/auth/login", data);
-      const { user, sessionId } = res.data;
-      set({ authUser: user, sessionId });
+      const { user } = res.data;
+      set({ authUser: user });
       toast.success("Log in successful");
     } catch (error) {
         console.log(error);
