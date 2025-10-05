@@ -31,13 +31,36 @@ export const useBookStore = create((set, get) => ({
     }));
   },
 
+  getBooks: async ({ limit = 20, author = null, genre = null } = {}) => {
+    const state = get();
+    state._setLoader("getBooks", true);
+    state._setError("getBooks", null);
+
+    try {
+      const res = await axiosInstance.get("/book", {
+        params: { limit, author, genre },
+      });
+
+      return res.data;
+    } catch (error) {
+      const msg = error.response?.data?.message || "Failed to fetch books";
+      state._setError("getBooks", msg);
+      console.error(error);
+      return null;
+    } finally {
+      state._setLoader("getBooks", false);
+    }
+  },
+
+  getBookById: async () => {},
+
   createBook: async (data) => {
     const state = get();
     state._setLoader("createBook", true);
     state._setError("createBook", null);
 
     try {
-      const res = await axiosInstance.post("/book", data );
+      const res = await axiosInstance.post("/book", data);
       console.log(res.data);
       toast.success("Book has been posted");
     } catch (error) {

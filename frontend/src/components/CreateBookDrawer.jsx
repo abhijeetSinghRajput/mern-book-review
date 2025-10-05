@@ -36,12 +36,14 @@ export default function CreateBookDialog() {
   const genres = [
     { value: "fiction", label: "Fiction" },
     { value: "non-fiction", label: "Non-fiction" },
-    { value: "fantasy", label: "Fantasy" },
-    { value: "thriller", label: "Thriller" },
-    { value: "romance", label: "Romance" },
-    { value: "scient", label: "Scient" },
-    { value: "history", label: "History" },
-    { value: "technology", label: "Technology" },
+    { value: "romance", label: "Romantic" },
+    { value: "children-ya", label: "Children & Young Adult" },
+    { value: "educational", label: "Educational & Academic" },
+    { value: "philosophy-religion", label: "Philosophy & Religion" },
+    { value: "science-tech", label: "Science & Technology" },
+    { value: "art-entertainment", label: "Art, Music & Entertainment" },
+    { value: "business-economics", label: "Business & Economics" },
+    { value: "health-lifestyle", label: "Health & Lifestyle" },
   ];
 
   // Show preview immediately when user selects a file

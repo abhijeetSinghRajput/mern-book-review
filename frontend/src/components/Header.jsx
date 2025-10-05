@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { LogOut, User, Mail, Plus } from "lucide-react";
 import CreateBookDrawer from "./CreateBookDrawer";
+import { Separator } from "./ui/separator";
 
 const Header = () => {
   const { authUser } = useAuthStore();
@@ -31,7 +32,7 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 bg-background w-full border-b bg-background/95 backdrop-blur z-50">
+    <header className="sticky top-0 w-full border-b bg-background/95 backdrop-blur z-50">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -49,31 +50,29 @@ const Header = () => {
                     variant="ghost"
                     className="relative h-8 w-8 rounded-full"
                   >
-                    <Avatar className="h-8 w-8">
-                      <AvatarFallback className="bg-primary text-primary-foreground">
+                    <Avatar className="size-10 text-lg">
+                      <AvatarFallback className="text-muted-foreground">
                         {getInitial()}
                       </AvatarFallback>
                     </Avatar>
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-80" align="end">
+                <PopoverContent className="w-max p-2" align="end">
                   <div className="flex flex-col space-y-4">
                     {/* User Info Section */}
-                    <div className="flex items-center space-x-4 p-2">
+                    <div className="flex items-center space-x-4">
                       <Avatar className="h-12 w-12">
-                        <AvatarFallback className="bg-primary text-primary-foreground text-lg">
+                        <AvatarFallback className="bg-accent text-muted-foreground text-lg">
                           {getInitial()}
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex flex-col space-y-1">
                         <div className="flex items-center space-x-2">
-                          <User className="h-4 w-4 text-muted-foreground" />
                           <span className="text-sm font-medium">
                             {authUser.fullName || "User"}
                           </span>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <Mail className="h-4 w-4 text-muted-foreground" />
                           <span className="text-sm text-muted-foreground">
                             {authUser.email}
                           </span>
@@ -81,20 +80,17 @@ const Header = () => {
                       </div>
                     </div>
 
-                    {/* Divider */}
-                    <div className="border-t" />
+                    <Separator/>
 
                     {/* Actions Section */}
-                    <div className="space-y-2">
-                      <Button
-                        variant="destructive"
-                        className="w-full justify-start"
-                        onClick={handleLogout}
-                      >
-                        <LogOut className="h-4 w-4 mr-2" />
-                        Sign out
-                      </Button>
-                    </div>
+                    <Button
+                      variant="destructive"
+                      className="w-full justify-start"
+                      onClick={handleLogout}
+                    >
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Sign out
+                    </Button>
                   </div>
                 </PopoverContent>
               </Popover>
@@ -103,7 +99,7 @@ const Header = () => {
             )}
 
             {/* Theme Toggle */}
-            <CreateBookDrawer/>
+            <CreateBookDrawer />
             <ModeToggle />
           </nav>
         </div>

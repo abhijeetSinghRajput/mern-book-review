@@ -2,14 +2,61 @@ import Book from "../models/book.model.js";
 import { deleteImage, uploadStream } from "../utils/cloudinary.js";
 
 // ✅ Get all books
+// {
+//   "success": true,
+//   "data": [...],
+//   "meta": {
+//     "total": 140,
+//     "page": 2,
+//     "limit": 10,
+//     "totalPages": 14,
+//     "hasNextPage": true,
+//     "hasPrevPage": true
+//   }
+// }
 export const getAllBooks = async (req, res) => {
   try {
-    const books = await Book.find().sort({ createdAt: -1 });
-    res.status(200).json({ success: true, data: books });
+    const { page = 1, limit = 20, genre, author } = req.query;
+
+    // Build dynamic filters
+    const filter = {};
+    if (genre) filter.genre = { $regex: genre, $options: "i" };
+    if (author) filter.author = { $regex: author, $options: "i" };
+
+    // Convert to numbers
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+
+    // Fetch books with filter, pagination & sorting
+    const [books, total] = await Promise.all([
+      Book.find(filter)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(parseInt(limit)),
+      Book.countDocuments(filter),
+    ]);
+
+    const totalPages = Math.ceil(total / limit);
+
+    res.status(200).json({
+      success: true,
+      data: books,
+      meta: {
+        total,
+        page: parseInt(page),
+        limit: parseInt(limit),
+        totalPages,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+      },
+    });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
+
 
 // ✅ Get single book by ID
 export const getBook = async (req, res) => {
