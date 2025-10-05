@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { LogOut, User, Mail, Plus } from "lucide-react";
-import CreateBookDrawer from "./CreateBookDrawer";
+import CreateBookDrawer from "./CreateBookDialog";
 import { Separator } from "./ui/separator";
 
 const Header = () => {
@@ -42,6 +42,10 @@ const Header = () => {
 
           {/* Navigation */}
           <nav className="flex items-center gap-4">
+            {/* Theme Toggle */}
+            <CreateBookDrawer />
+            <ModeToggle />
+            
             {/* User Avatar Popover */}
             {authUser ? (
               <Popover>
@@ -80,7 +84,7 @@ const Header = () => {
                       </div>
                     </div>
 
-                    <Separator/>
+                    <Separator />
 
                     {/* Actions Section */}
                     <Button
@@ -97,10 +101,6 @@ const Header = () => {
             ) : (
               <div className="text-sm text-muted-foreground">Not signed in</div>
             )}
-
-            {/* Theme Toggle */}
-            <CreateBookDrawer />
-            <ModeToggle />
           </nav>
         </div>
       </div>
